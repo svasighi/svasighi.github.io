@@ -7,6 +7,7 @@ hgroup,
 main,
 nav,
 section {
+  font-family: "iransans";
   display: block; }
 
 *,
@@ -18,8 +19,50 @@ section {
   padding: 0; }
 
 li {
-  list-style: none; }
+  font-family: "iransans";
+   list-style: none; }
 
+  @font-face {
+    font-family: "iransans";
+    font-style: normal;
+    font-weight: 400;
+    src: url('IRANSansWeb.eot');
+    src: url('IRANSansWeb.eot?#iefix') format('embedded-opentype'), url('IRANSansWeb.woff2') format('woff2'), url('IRANSansWeb.woff') format('woff'), url('IRANSansWeb.ttf') format('truetype'), url('IRANSansWeb.svg') format('svg');
+}
+
+@font-face {
+    font-family: "iransans";
+    font-style: normal;
+    font-weight: 300;
+    src: url('IRANSansWeb_Light.eot');
+    src: url('IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'), url('IRANSansWeb_Light.woff2') format('woff2'), url('IRANSansWeb_Light.woff') format('woff'), url('IRANSansWeb_Light.ttf') format('truetype'), url('IRANSansWeb_Light.svg') format('svg');
+
+}
+
+@font-face {
+    font-family: "iransans";
+    font-style: normal;
+    font-weight: 500;
+    src: url('IRANSansWeb_Medium.eot');
+    src: url('IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'), url('IRANSansWeb_Medium.woff2') format('woff2'), url('IRANSansWeb_Medium.woff') format('woff'), url('IRANSansWeb_Medium.ttf') format('truetype'), url('IRANSansWeb_Medium.svg') format('svg');;
+}
+
+@font-face {
+    font-family: "iransans";
+    font-style: normal;
+    font-weight: 700;
+    src: url('IRANSansWeb_Bold.eot');
+    src: url('IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), url('IRANSansWeb_Bold.woff2') format('woff2'), url('IRANSansWeb_Bold.woff') format('woff'), url('IRANSansWeb_Bold.ttf') format('truetype'), url('IRANSansWeb_Bold.svg') format('svg');;
+}
+
+@font-face {
+    font-family: "iransans";
+    font-style: normal;
+    font-weight: 200;
+    src: url('IRANSansWeb_UltraLight.eot');
+    src: url('IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'), url('IRANSansWeb_UltraLight.woff2') format('woff2'), url('IRANSansWeb_UltraLight.woff') format('woff'), url('IRANSansWeb_UltraLight.ttf') format('truetype'), url('IRANSansWeb_UltraLight.svg') format('svg');;
+}
+  
 img {
   height: auto;
   max-width: 100%;
@@ -92,12 +135,14 @@ html {
 body {
   background: #FFFFFF;
   color: #17181E;
+  font-family: "iransans"!important;
   font-weight: normal;
   line-height: 1.7;
   -ms-scroll-chaining: none;
   overscroll-behavior: none; }
 
 a {
+  font-family: "iransans";
   color: #D73A42;
   text-decoration: none;
   -webkit-transition: all 0.24s ease-out;
@@ -114,6 +159,7 @@ a:focus {
   outline: none; }
 
 .invert {
+  font-family: "iransans";
   color: #17181E;
   text-decoration: none;
   -webkit-transition: all 0.24s ease-out;
@@ -152,6 +198,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: "iransans";
   color: #17181E;
   font-weight: 700;
   -webkit-hyphens: manual;
@@ -242,10 +289,12 @@ h6 + p {
 
 b,
 strong {
+  font-family: "iransans";
   font-weight: 700; }
 
 blockquote {
-  padding: 3.68333rem 0 0;
+  font-family: "iransans";
+   padding: 3.68333rem 0 0;
   position: relative;
   text-align: center; }
   blockquote {
@@ -259,7 +308,7 @@ blockquote {
   blockquote::before {
     color: #17181E;
     content: "“";
-    font: normal 320%/0.9 Georgia, Times, Times New Roman, serif;
+    font: normal 320%/0.9 "iransans";;
     top: 0.56667rem;
     position: absolute;
     left: 50%;
@@ -294,7 +343,7 @@ code {
   background-color: #F7F8FB;
   color: #D73A42;
   font-size: 0.87891rem;
-  font-family: "Monaco", "Courier New", monospace; }
+  font-family: "iransans";}
 
 table {
   border: 1px solid #d1d1d2;
@@ -563,7 +612,7 @@ textarea {
   display: flex;
   height: 4.4rem;
   position: absolute;
-  padding: 0 6vw;
+  padding:  6vw 10vw;
   -webkit-transition: background .5s ease;
   -o-transition: background .5s ease;
   transition: background .5s ease;
@@ -606,9 +655,11 @@ textarea {
   color: #FFFFFF !important;
   font-size: 1.21363rem;
   font-weight: normal;
-  margin-right: auto; }
+ }
   .logo > img {
-    max-height: calc(3.96667rem + 1vw); }
+    max-height: calc(3.96667rem + 1vw); 
+    border-radius: 100%;
+  }
 
 .search {
   -webkit-box-ordinal-group: 3;
@@ -665,6 +716,27 @@ textarea {
       @media screen and (min-width: 70rem) {
         .search__input {
           font-size: 1.57109rem; } }
+  .site-title{    
+    display: inline-block;
+    font-weight: bold;
+  }
+  .site-title a{
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .site-description{    
+    display: inline-block;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+  .site-branding{
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: 2.5em;
+  }
   .search__close {
     background: none !important;
     -webkit-box-shadow: none !important;
@@ -775,7 +847,7 @@ textarea {
 .navbar {
   -webkit-box-ordinal-group: 4;
   -ms-flex-order: 3;
-  order: 3; }
+ }
   .navbar .navbar__menu {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -790,9 +862,9 @@ textarea {
         display: none; } }
     .navbar .navbar__menu li {
       display: block;
-      font-size: 0.77248rem;
+      font-size: 1.3rem;
       line-height: 1.7;
-      font-weight: 500;
+      font-weight: bolder;
       padding: 0;
       position: relative;
       text-transform: uppercase;
@@ -914,7 +986,7 @@ textarea {
     overflow: visible;
     padding: 1rem;
     position: relative;
-    right: -1rem;
+    left: -1rem;
     text-transform: none;
     z-index: 2004; }
     @media all and (min-width: 56.25em) {
@@ -1196,14 +1268,30 @@ textarea {
     margin: 0;
     position: absolute;
     width: 100%; }
-    .hero__image--overlay::after {
+    .hero__image--overlay::before {
       content: '';
-      display: block;
+      display: table-caption;
       height: 100%;
+      background: hsl( 0, 100%, 33% );
+      mix-blend-mode: multiply;
+      opacity: 1;
       left: 0;
       position: absolute;
       top: 0;
-      width: 100%; }
+      width: 100%;
+  }
+      .hero__image--overlay::after {
+        content: ''!important;
+        display: table-caption!important;
+        height: 100%!important;
+        background: #000!important;
+        mix-blend-mode: multiply;
+        opacity: 0.1!important;
+        left: 0!important;
+        position: absolute!important;
+        top: 0!important;
+        width: 100%!important;
+    }
     .hero__image > img {
       display: block;
       height: inherit;
@@ -1328,7 +1416,7 @@ textarea {
 .post__author-thumb {
   border-radius: 50%;
   height: 1.7rem;
-  margin-right: 0.56667rem;
+  margin-left: 0.56667rem;
   width: 1.7rem; }
 
 .post__entry {
