@@ -3,12 +3,274 @@
     <title>شادمهر وثیقی</title>
     <link href="https://svasighi.github.io/feed.xml" rel="self" />
     <link href="https://svasighi.github.io" />
-    <updated>2020-01-22T18:32:02+03:30</updated>
+    <updated>2020-01-23T01:25:09+03:30</updated>
     <author>
         <name>شادمهر وثیقی</name>
     </author>
     <id>https://svasighi.github.io</id>
 
+    <entry>
+        <title>ذخیره اطلاعات آبجکت ها به صورت باینری(binary) در c++</title>
+        <author>
+            <name>شادمهر وثیقی</name>
+        </author>
+        <link href="https://svasighi.github.io/dhkhyrh-tlaat-abjkht-h-bh-swrt-bynrybinary-dr-c.html"/>
+        <id>https://svasighi.github.io/dhkhyrh-tlaat-abjkht-h-bh-swrt-bynrybinary-dr-c.html</id>
+
+        <updated>2020-01-23T01:24:37+03:30</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://svasighi.github.io/media/posts/3/iran_tehran_road_building_66223_1920x1080.png" alt="" />
+                     تو این پست تا حدی که کارت راه بیفته میخوام به ذخیره آبجکت ها به صورت فایل باینری بپردازم. این کار کمک میکنه که برنامه شما بعد از هربار بسته شدن اطلاعات قبلی خودشو ذخیره کنه در فایلی تا دفعه بعد که خواستیم ازش استفاده کنیم اطلاعات خودشو بازیابی کنه . به همین راحتی :) البته باید ذکر کنم به طورکلی این تکنیک برای ذخیره اطلاعات آبجکت ها خیلی کار حرفه ای نیستش و توی پروژه های بزرگ بجای اینکار از دیتابیس ها استفاده میکنند. که یکی از سبک ترین ها و ساده ترین ها از لحاظ یادگیری sqlite هستش(کلا 35 کیلوبایته). اطلاعات بیشتر خب حاشیه کافیه بریم سراغ کد: در ابتدای کار برای پرهیز از دوباره کاری و نوتشتن مجدد کدها کلاسی به نام BinaryFile.h ایجاد میکنیم: /* ما قراره این ساختار ذخیره فایل را برای هر آبجکتی مستقل از کلاسی که از آن ایجاد شده استفاده کنیم (که برای هر آبجکت کلاس جدا گانه ای ایجاد نکنیم) ساختار توابع را ریزبه ریز در بخش پیش رو بررسی میکنیم. تا یادم نرفته هشدار بدم : برای همه کلاس هایی که آبجکتاشون قراره از کد بالا استفاده کنه باید حتما ممبرفانکشن GetID با پروتوتایپ زیر را ایجاد کنید وگرنه برنامه&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                    <img src="https://svasighi.github.io/media/posts/3/iran_tehran_road_building_66223_1920x1080.png" alt="" />
+                <p> تو این پست تا حدی که کارت راه بیفته میخوام به ذخیره آبجکت ها به صورت فایل باینری بپردازم. این کار کمک میکنه که برنامه شما بعد از هربار بسته شدن اطلاعات قبلی خودشو ذخیره کنه در فایلی تا دفعه بعد که خواستیم ازش استفاده کنیم اطلاعات خودشو بازیابی کنه . به همین راحتی :)</p>
+<p>البته باید ذکر کنم به طورکلی این تکنیک برای ذخیره اطلاعات آبجکت ها خیلی کار حرفه ای نیستش و توی پروژه های بزرگ بجای اینکار از دیتابیس ها استفاده میکنند. که یکی از سبک ترین ها و ساده ترین ها از لحاظ یادگیری sqlite هستش(کلا 35 کیلوبایته).<a href="https://www.sqlite.org/docs.html" rel="nofollow"> اطلاعات بیشتر</a></p>
+<p>خب حاشیه کافیه بریم سراغ کد:</p>
+<p>در ابتدای کار برای پرهیز از دوباره کاری و نوتشتن مجدد کدها کلاسی به نام BinaryFile.h ایجاد میکنیم:</p>
+<p class="align-left"><code>/*</code></p>
+<div>
+<div class="align-left"><code>    ******* IMPORTANT POINT : yout class must have int GetID(void); method ******** </code></div>
+<div class="align-left"><code>    created by shadmehr vasighi under MIT lICENSE </code></div>
+<div class="align-left"><code>    this code snippet is a part of the UMIS PROJECT</code></div>
+<div class="align-left"><code>    get in touch through my blog : https://svasighi.github.io</code></div>
+<br>
+<div class="align-left"><code>*/</code></div>
+<div class="align-left"><code>#ifndef BINARYFILE_H</code></div>
+<div class="align-left"><code>#define BINARYFILE_H</code></div>
+<br>
+<div class="align-left"><code>#include&lt;iostream&gt;</code></div>
+<div class="align-left"><code>#include&lt;fstream&gt;</code></div>
+<div class="align-left"><code>#include&lt;string&gt;</code></div>
+<br>
+<div class="align-left"><code>template&lt;class Object&gt;</code></div>
+<div class="align-left"><code>class BinaryFile{</code></div>
+<div class="align-left"><code>    char* file_address;</code></div>
+<div class="align-left"><code>public:</code></div>
+<div class="align-left"><code>    BinaryFile(char*);</code></div>
+<div class="align-left"><code>    ~BinaryFile();</code></div>
+<div class="align-left"><code>    void AddRecord(Object); //ذخیره آبجکتی جدید در فایل</code></div>
+<div class="align-left"><code>    Object* FetchAllRecords(int) const; //تمامی آبجکت های موجود در فایل را به صورت آرایه برمی گرداند</code></div>
+<div class="align-left"><code>    Object FetchByID(int) const; //یک آبجکت خاص را براساس آیدی یکتای آن برمیگرداند</code></div>
+<div class="align-left"><code>    void DeleteRecordByID(int);//یک آبجکت خاص را براساس آیدی یکتای آن از درون فایل پاک میکند</code></div>
+<div class="align-left"><code>    void UpdateRecordByID(int, Object);//یک آبجکت خاص را براساس آیدی یکتای آن درون فایل تغییر میدهد.</code></div>
+<br>
+<div class="align-left"><code>};</code></div>
+<div class="align-left"><code>#endif // BINARYFILE_H</code></div>
+<div class="align-right">تا این جای کار ممکنه سوالاتی براتون پیش اومده باشه, الان بهش میپردازیم</div>
+<ul class="align-right">
+<li>چرا از تمپلیت استفاده کردیم؟</li>
+</ul>
+<p class="align-right">ما قراره این ساختار ذخیره فایل را برای هر آبجکتی مستقل از کلاسی که از آن ایجاد شده استفاده کنیم (که برای هر آبجکت کلاس جدا گانه ای ایجاد نکنیم)</p>
+<ul class="align-right">
+<li>و این توابع چجوری این عملیات را انجام میدهند؟</li>
+</ul>
+<p class="align-right">ساختار توابع را ریزبه ریز در بخش پیش رو بررسی میکنیم.</p>
+<hr></div>
+<div>
+<div class="align-left"><code> </code></div>
+<div class="align-left"><code>/*</code></div>
+<div class="align-left"><code>    ******* IMPORTANT POINT : yout class must have int GetID(void); method ******** </code></div>
+<div class="align-left"><code>    created by shadmehr vasighi under MIT lICENSE </code></div>
+<div class="align-left"><code>    this code snippet is a part of the UMIS PROJECT</code></div>
+<div class="align-left"><code>    get in touch through my blog : https://svasighi.github.io</code></div>
+<br>
+<div class="align-left"><code>*/</code></div>
+<div class="align-left"><code>#include&lt;iostream&gt;</code></div>
+<div class="align-left"><code>#include&lt;fstream&gt;</code></div>
+<div class="align-left"><code>#include&lt;string&gt;</code></div>
+<div class="align-left"><code>#include&lt;../include/BinaryFile.h&gt;</code></div>
+<br>
+<div class="align-left"><code>template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    BinaryFile&lt;Object&gt;::BinaryFile(char* _file_address){</code></div>
+<div class="align-left"><code>        size_t size = sizeof(_file_address) / sizeof(char) + 1;</code></div>
+<div class="align-left"><code>        file_address = new char[size];</code></div>
+<div class="align-left"><code>        memcpy(file_address,_file_address ,size);</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    BinaryFile&lt;Object&gt;::~BinaryFile(){</code></div>
+<div class="align-left"><code>        delete [] file_address;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    void BinaryFile&lt;Object&gt;::AddRecord(Object _object){</code></div>
+<div class="align-left"><code>        std::ofstream _ofstream;</code></div>
+<div class="align-left"><code>        _ofstream.open(file_address, std::ios::binary|std::ios::app);</code></div>
+<div class="align-left"><code>        _ofstream.write((char *) &amp;_object, sizeof(_object));  </code></div>
+<div class="align-left"><code>        _ofstream.close();</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    Object* BinaryFile&lt;Object&gt;::BinaryFile::FetchAllRecords(int count) const{</code></div>
+<div class="align-left"><code>        Object _array[count];        </code></div>
+<div class="align-left"><code>        std::ifstream _ifstream;</code></div>
+<div class="align-left"><code>        _ifstream.open(file_address, std::ios::binary);</code></div>
+<div class="align-left"><code>        for(int i=0; _ifstream.read((char*)&amp;_array[i], sizeof(_array[i]));i++);</code></div>
+<div class="align-left"><code>        _ifstream.close();</code></div>
+<div class="align-left"><code>        return _array;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    Object BinaryFile&lt;Object&gt;::BinaryFile::FetchByID(int _id) const{</code></div>
+<div class="align-left"><code>        Object _object;</code></div>
+<div class="align-left"><code>        std::ifstream _ifstream;</code></div>
+<div class="align-left"><code>        _ifstream.open(file_address, std::ios::binary);</code></div>
+<div class="align-left"><code>        while(_ifstream.read((char*)&amp;_object, sizeof(_object)))</code></div>
+<div class="align-left"><code>        {</code></div>
+<div class="align-left"><code>            if(_object.GetID() == _id){</code></div>
+<div class="align-left"><code>                _ifstream.close();</code></div>
+<div class="align-left"><code>                return _object;</code></div>
+<div class="align-left"><code>            }</code></div>
+<div class="align-left"><code>        }</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    void BinaryFile&lt;Object&gt;:: DeleteRecordByID(int _id)</code></div>
+<div class="align-left"><code>    {</code></div>
+<div class="align-left"><code>        Object _object;</code></div>
+<div class="align-left"><code>        std::ifstream _ifstream;</code></div>
+<div class="align-left"><code>        std::ofstream _ofstream;</code></div>
+<div class="align-left"><code>        _ifstream.open(file_address, std::ios::binary|std::ios::app);</code></div>
+<div class="align-left"><code>        _ofstream.open("temp.dat", std::ios::binary|std::ios::out);</code></div>
+<div class="align-left"><code>        while(_ifstream.read((char*)&amp;_object, sizeof(_object)))</code></div>
+<div class="align-left"><code>        {</code></div>
+<div class="align-left"><code>            if(_object.GetID() != _id){</code></div>
+<div class="align-left"><code>                _ofstream.write((char*)&amp;_object,sizeof(_object));</code></div>
+<div class="align-left"><code>            }</code></div>
+<div class="align-left"><code>        }</code></div>
+<div class="align-left"><code>        _ifstream.close();</code></div>
+<div class="align-left"><code>        _ofstream.close();</code></div>
+<div class="align-left"><code>        remove(file_address);</code></div>
+<div class="align-left"><code>        _ifstream.open("temp.dat", std::ios::binary|std::ios::app);</code></div>
+<div class="align-left"><code>        _ofstream.open(file_address, std::ios::binary|std::ios::out);</code></div>
+<div class="align-left"><code>        while(_ifstream.read((char*)&amp;_object, sizeof(_object)))</code></div>
+<div class="align-left"><code>                _ofstream.write((char*)&amp;_object,sizeof(_object));</code></div>
+<div class="align-left"><code>        _ofstream.close();</code></div>
+<div class="align-left"><code>        _ifstream.close();</code></div>
+<div class="align-left"><code>        remove("temp.dat");</code></div>
+<br>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    template &lt;class Object&gt;</code></div>
+<div class="align-left"><code>    void BinaryFile&lt;Object&gt;:: UpdateRecordByID(int _id, Object _object){</code></div>
+<div class="align-left"><code>        std::fstream _fstream;</code></div>
+<div class="align-left"><code>        bool found = false;</code></div>
+<div class="align-left"><code>        _fstream.open(file_address , std::ios::in|std::ios::out);</code></div>
+<div class="align-left"><code>        while(_fstream.read((char*)&amp;_object,sizeof(_object))&amp;&amp; found == false)</code></div>
+<div class="align-left"><code>        {</code></div>
+<div class="align-left"><code>            if(_object.GetID() == _id)</code></div>
+<div class="align-left"><code>            {</code></div>
+<div class="align-left"><code>                int position = -1* sizeof(_object);</code></div>
+<div class="align-left"><code>                _fstream.seekp(position,std::ios::cur);</code></div>
+<div class="align-left"><code>                _fstream.write((char*)&amp;_object,sizeof(_object));</code></div>
+<div class="align-left"><code>                found = true;</code></div>
+<div class="align-left"><code>            }</code></div>
+<div class="align-left"><code>        }</code></div>
+<div class="align-left"><code>        _fstream.close();</code></div>
+<div class="align-left"><code>    }</code></div>
+<br>
+<div> </div>
+<p>تا یادم نرفته هشدار بدم : برای همه کلاس هایی که آبجکتاشون قراره از کد بالا استفاده کنه باید حتما ممبرفانکشن <code>GetID</code> با پروتوتایپ زیر را ایجاد کنید وگرنه برنامه کرش میکنه البته برای حل این مشکل هم راه هست استفاده از اینترفیس ها و اجباری کردن این کار, که برای جلوگیری از پیچیدگی بیش از حد از نوشتنش خود داری کردم.</p>
+<p>پروتوتایپ تابع:</p>
+<p><code>public:</code></p>
+<p><code>int GetID(void);</code></p>
+<p>خب رسیدیم به تفسیر کدها :</p>
+</div>
+<div> </div>
+<div> </div>
+<div class="align-right">
+<ul>
+<li class="align-right">ofstream: کلاس استریمی برای نوشتن روی فایل</li>
+<li class="align-right">ifstream: کلاس استریمی برای خواندن از فایل</li>
+<li class="align-right">fstream: کلاس استریمی برای خواندن و نوشتن در فایل</li>
+</ul>
+<br>
+<div><code> std::ifstream _ifstream;</code></div>
+<div><code> _ifstream.open("filename.dat", std::ios::binary);</code></div>
+<br>این کلاس ها به طور مستقیم یا غیر مستقیم از کلاس های <code>istream</code> , <code>ostream</code> مشتق شده اند<br>ممبرفانکشن <code>open</code> موجود در کلاس <code>ifstream</code> یک فایل با نام filename.dat ایجاد میکند  و به عنوان در آرگومان دوم این تابع <code>mode</code> (دسترسی موردنظر) میباشد<br>
+<table>
+<tbody>
+<tr>
+<td>ios::in</td>
+<td>عملیات input</td>
+</tr>
+<tr>
+<td>ios::out</td>
+<td>عملیات output</td>
+</tr>
+<tr>
+<td>ios::binary</td>
+<td>حالت binary</td>
+</tr>
+<tr>
+<td>ios::app</td>
+<td>افزودن به انتهای فایل بدون از دست رقتن اطلاعات قبلی</td>
+</tr>
+<tr>
+<td>ios::trunc</td>
+<td>اگر فایلی برای غملیات output قبلا بازشده باشد مقادیر قبلی را پاک میکند ومقدار جدید را جایگزین میکند</td>
+</tr>
+</tbody>
+</table>
+با<code>|</code> میتونید چندتا دسترسی مختلف را استفاده کنید </div>
+<div class="align-right">مثلا: 
+<p><code>, ios::out | ios::app | ios::binary</code><br>این توضیحات درمورد ostream.open() هم صدق میکند</p>
+<p class="align-left"><code>_ifstream.read((char*)&amp;_object, sizeof(_object))</code></p>
+<p><code>read</code> تابعی از کلاس <code>fstream</code> است,که اطلاعات را از فایلی که <code>_fstream</code> به آن اشاره میکند میخواند و در آبجکتی .که آدرسش را در اولین آرگومان داده ایم میریزد </p>
+<p><code>&amp;_object</code> - آدرس مموری آبجکتی که میخوایم دیتا را واردش کنیم.</p>
+<p><code>(char*) &amp;_object</code> - تایپ <code>&amp;_object</code> را به پوینتری به کاراکتر ها تبدیل(cast ) میکنیم.</p>
+<p><code>sizeof(_object)</code> - نمایانگر سایز آبجکت.</p>
+<p><code> _fstream.read</code> - تابع مورد بحث پس</p>
+<p class="align-left"><code>_ifstream.read((char*)&amp;_object, sizeof(_object))</code></p>
+<p>اطلاعات را از روی فایل میخواند و درون آبجکت (_object) ذخیره میکند</p>
+<p>و پس از اتمام کار باید جریان را با دستور زیر ببندید</p>
+<p class="align-left"><code>_ifstream.close();</code></p>
+<p>فرایند مشابهی برای  ofstream.write() موجود است </p>
+<div class="align-left"><code> _ofstream.open("file_address.dat", std::ios::binary|std::ios::app);</code></div>
+<div class="align-left"><code>_ofstream.write((char *) &amp;_object, sizeof(_object));  </code></div>
+<div class="align-left"><code>_ofstream.close();</code></div>
+<div> </div>
+<div>استفده از کلاس ایجاد شده:</div>
+<div>برای مشاهده نحوه استفاده به مثال مراجعه کنید.</div>
+<div> </div>
+<div>
+<div>
+<div class="align-left"><code>class Student {</code></div>
+<div class="align-left"><code>    int id;</code></div>
+<div class="align-left"><code>    std::string name;</code></div>
+<div class="align-left"><code>public:</code></div>
+<div class="align-left"><code>    void SetID(int _id){</code></div>
+<div class="align-left"><code>        id =_id;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    int GetID(void){</code></div>
+<div class="align-left"><code>        return id;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    void SetName(std::string _name){</code></div>
+<div class="align-left"><code>        name =_name;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>    std::string GetName(void){</code></div>
+<div class="align-left"><code>        return name;</code></div>
+<div class="align-left"><code>    }</code></div>
+<div class="align-left"><code>};</code></div>
+<div class="align-left"><code>int main(){</code></div>
+<div class="align-left"><code>    Student _student;</code></div>
+<div class="align-left"><code>    _student.SetID(1);</code></div>
+<div class="align-left"><code>    std::string name = "shadmehr vasighi";</code></div>
+<div class="align-left"><code>    _student.SetName(name);</code></div>
+<div class="align-left"><code>    BinaryFile &lt;Student&gt;binary_file((char*) "storage/students.dat" );</code></div>
+<div class="align-left"><code>    binary_file.AddRecord(_student);</code></div>
+<div class="align-left"><code>    Student found_student;</code></div>
+<div class="align-left"><code>    found_student = binary_file.FetchByID(1);</code></div>
+<div class="align-left"><code>    std::cout &lt;&lt; found_student.GetName();</code></div>
+<div>}</div>
+</div>
+<div> </div>
+<div> </div>
+<div>با پاک نکردن کپی رایت ابتدای کد به من قوت قلبی برای ادامه مسیر بدهید 🤗</div>
+</div>
+</div>
+<div> </div>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>about me</title>
         <author>
