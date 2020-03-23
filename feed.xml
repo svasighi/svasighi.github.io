@@ -3,7 +3,7 @@
     <title>شادمهر وثیقی</title>
     <link href="https://svasighi.github.io/feed.xml" rel="self" />
     <link href="https://svasighi.github.io" />
-    <updated>2020-03-23T07:12:12+04:30</updated>
+    <updated>2020-03-23T07:15:23+04:30</updated>
     <author>
         <name>شادمهر وثیقی</name>
     </author>
@@ -14,10 +14,10 @@
         <author>
             <name>شادمهر وثیقی</name>
         </author>
-        <link href="https://svasighi.github.io/shywh-y-bhtr-bry-taaryf-route-h-dr-lrwl.html"/>
-        <id>https://svasighi.github.io/shywh-y-bhtr-bry-taaryf-route-h-dr-lrwl.html</id>
+        <link href="https://svasighi.github.io/better-way-to-defign-routes-in-laravel.html"/>
+        <id>https://svasighi.github.io/better-way-to-defign-routes-in-laravel.html</id>
 
-        <updated>2020-03-23T07:12:06+04:30</updated>
+        <updated>2020-03-23T07:15:11+04:30</updated>
             <summary>
                 <![CDATA[
                         <img src="https://svasighi.github.io/media/posts/7/sdfsd.png" alt="" />
@@ -28,12 +28,12 @@
             <![CDATA[
                     <img src="https://svasighi.github.io/media/posts/7/sdfsd.png" alt="" />
                 <p>در حالت عادی میتوانیم به شکل زیر یک route را تعریف کنیم.</p>
-<pre><code class="language-php hljs php" style="dir: ltr;" >Route::get(<span class="hljs-string">'my-route'</span>, <span class="hljs-string">'MyController@index'</span>);
+<pre><code class="language-php hljs php" style="direction: ltr;" >Route::get(<span class="hljs-string">'my-route'</span>, <span class="hljs-string">'MyController@index'</span>);
 </code></pre>
 <p>زمان بسیار زیادیست که این شیوه توانسته route های ما را مدیریت کند. ولی در اپلیکیشن های جدیدتر لاراول این امکان وجود دارد که به شیوه ای جدید و کارآمد این تعریف را با کمک یک tuple انجام دهید.(<a href="https://github.com/laravel/framework/pull/24385" target="_blank" rel="nofollow noopener noreferrer">اطلاعات بیشتر</a>)</p>
-<pre><code class="language-php hljs php" style="dir: ltr;" >Route::get(<span class="hljs-string">'my-route'</span>, [\App\Http\Controllers\SomeController::class, <span class="hljs-string">'index'</span>]);<br></code></pre>
+<pre><code class="language-php hljs php" style="direction: ltr;" >Route::get(<span class="hljs-string">'my-route'</span>, [\App\Http\Controllers\SomeController::class, <span class="hljs-string">'index'</span>]);<br></code></pre>
 <p>همچنین میتوان با یکبار import کردن namespace استفاده از این شیوه را ساده تر و سریع تر کرد.</p>
-<pre><code class="language-php hljs php" style="dir: ltr;" ><span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\Some<span class="hljs-title">Controller</span>;
+<pre><code class="language-php hljs php" style="direction: ltr;" ><span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\Some<span class="hljs-title">Controller</span>;
 
 Route::get(<span class="hljs-string">'my-route'</span>, [SomeController::class, <span class="hljs-string">'index'</span>]);<br></code></pre>
 <p>در اپلیکیشن هایی که در دنیای واقعی توسعه میدهیم احتمالا از use های زیادی استفاده خواهیم کرد که ممکن است برنامه را شلوغ و مدیریت آن را سخت تر کند. البته با داشتن یک ide خوب این مشکل اجتناب پذیریست.</p>
@@ -44,7 +44,7 @@ Route::get(<span class="hljs-string">'my-route'</span>, [SomeController::class, 
 <li>زمانی که اسم controller را refactor کنید دیگر نیاز نیست این تغییرات را در route ها نیز اعمال کنید.</li>
 </ol>
 <p>البته در redirect کردن ها نیز میتوان از این tuple با کمک متد action استفاده کرد. </p>
-<pre><code class="language-php hljs php" style="dir: ltr;" ><span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>;
+<pre><code class="language-php hljs php" style="direction: ltr;" ><span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> Some<span class="hljs-title">Controller</span>
 </span>{
@@ -56,7 +56,7 @@ Route::get(<span class="hljs-string">'my-route'</span>, [SomeController::class, 
     }
 }</code></pre>
 <p>اگر از کنترلر های <a href="https://laravel.com/docs/7.x/controllers#single-action-controllers" rel="nofollow">تک متده یا invokeable</a> (اگر معادل درستی براش میدونید تو کامنت ها بگید) استفاده میکنید میتونید route را به شکل زیر تعریف کنید.</p>
-<pre><code class="language-php hljs php" style="dir: ltr;" ><span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\Some<span class="hljs-title">Controller</span>;
+<pre><code class="language-php hljs php" style="direction: ltr;" ><span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\Some<span class="hljs-title">Controller</span>;
 
 Route::get(<span class="hljs-string">'my-route'</span>, SomeController::class);</code></pre>
 <p>تا یادم نرفته بگم که به دلایلی - مثل کار نکردن با ide پیشرفته- ممکنه  خیلی این شیوه بدرد ما نخورد؛ ولی حتما نیازه با اون آشنا باشیم چون در بسیاری از library ها و پکیج هایی که استفاده میکنیم از این شیوه استفاده میشه ، بد نیست باهاش آشنا باشیم <span class="emoji">😃</span>.</p>
